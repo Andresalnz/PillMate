@@ -11,7 +11,8 @@ import SwiftUI
 struct PillMateApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ReminderCalendarView(viewModel: ReminderCalendarVM())
+                .background(Color(red: 217/255, green: 220/255, blue: 214/255))
         }
     }
 }
