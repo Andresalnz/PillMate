@@ -12,7 +12,7 @@ struct MonthCalendarView: View {
     let nameMonth: String
     let daysOfWeeks: [String]
     let emptyDaysBeginMonth: Int
-    let daysInMonth: Int
+    let daysInMonth: [Int]
     
     let calendarGrid: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
     
@@ -22,7 +22,7 @@ struct MonthCalendarView: View {
                 .font(.headline)
                 .padding()
             
-            LazyVGrid(columns: calendarGrid) {
+            LazyVGrid(columns: calendarGrid, spacing: 30) {
                 ForEach(daysOfWeeks, id: \.self) { day in
                     Text(day)
                         .font(.caption)
@@ -32,9 +32,10 @@ struct MonthCalendarView: View {
                     Text("")
                         .id("empty \(emptyDay)")
                 }
-                ForEach(1...daysInMonth, id: \.self) { day in
-                    Text("\(day)")
-                        .padding(10)
+                ForEach(daysInMonth, id: \.self) { day in
+                    DayCalendarView(day: day)
+                        .id("day \(day)")
+                       
                 }
             }
         }
@@ -42,5 +43,5 @@ struct MonthCalendarView: View {
 }
 
 #Preview {
-    MonthCalendarView(nameMonth: "Febrero", daysOfWeeks: ["L", "M", "X", "J", "V", "S", "D"], emptyDaysBeginMonth: 4, daysInMonth: 28)
+    MonthCalendarView(nameMonth: "March", daysOfWeeks: ["L", "M", "X", "J", "V", "S", "D"], emptyDaysBeginMonth: 5, daysInMonth: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]).environmentObject(ReminderCalendarVM(currentDate: Date(), month: "", numberMonth: 0, days: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], numberWeekDay: 5))
 }
