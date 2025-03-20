@@ -31,5 +31,4 @@ struct FloatingActionButtonView: View {
 
 #Preview {
     FloatingActionButtonView(imageName: "plus", action: { print("He pulsado el botón") })
-    //ButtonFilterView(title: "Botón", action: { print("pulsado") })
 }

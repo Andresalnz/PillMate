@@ -13,7 +13,9 @@ struct ActionButtonView: View {
     var text: String
     
     var body: some View {
-        Button(action: { action() }, label: {
+        Button(action: {
+            action()
+        }, label: {
             Text(text)
                 .font(.title2)
         })
