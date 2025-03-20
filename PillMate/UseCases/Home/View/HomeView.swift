@@ -51,7 +51,7 @@ struct HomeView: View {
                     }
                 }
             }
-            .presentationDetents([.fraction(0.25), .medium])
+            .presentationDetents([.fraction(0.30), .medium])
         }
     }
 }
