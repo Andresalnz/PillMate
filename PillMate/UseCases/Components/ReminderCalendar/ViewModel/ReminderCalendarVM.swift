@@ -47,18 +47,20 @@ class ReminderCalendarVM: ObservableObject {
     
     func startOfMonth() -> Date {
         let components = calendar.dateComponents([.year, .month, .day, .hour], from: currentDate)
-       return calendar.date(from: components)!
+       return calendar.date(from: components) ?? Date()
    }
     
     // Devuelve los dias del mes
     func daysInMonth() {
         let range = calendar.range(of: .day, in: .month, for: monthoff)
-        days = Array(range!)
+        if let range = range {
+            days = Array(range)
+        }
     }
     
    // Calcula en que cae el primer dia de la semana del mes
     func firstDayOffset()  {
-        let firstDay = calendar.date(from: calendar.dateComponents([.year, .month], from: monthoff))!
+        let firstDay = calendar.date(from: calendar.dateComponents([.year, .month], from: monthoff)) ?? Date()
         let weekday = calendar.component(.weekday, from: firstDay) // 1 = Domingo, 7 = Sábado
         numberWeekDay = (weekday + 5) % 7 // Calculo para que Lunes sea 0
     }
@@ -72,8 +74,11 @@ class ReminderCalendarVM: ObservableObject {
     }
     
     func markToday() {
-        let timeZone = TimeZone(identifier: "Europe/Madrid")!
-        calendar.timeZone = timeZone
+    
+        if let timeZone = TimeZone(identifier: "Europe/Madrid") {
+            calendar.timeZone = timeZone
+        }
+        
     
         let actualComponents = calendar.dateComponents([.day, .month, .year], from: monthoff)
         let currentComponents = calendar.dateComponents([.day, .month, .year], from: currentDate)
