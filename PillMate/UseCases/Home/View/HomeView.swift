@@ -7,51 +7,21 @@
 
 import SwiftUI
 
-enum NavigationForm: Hashable {
-    case formAddReminderMedicine
-    case formaAddMedicineChest
-}
-
 struct HomeView: View {
     
+    @State var md: MedicationModel = MedicationModel(id: UUID() , name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 1, days: [], firstDoseTime: .now, momentDose: .afterMeal, customInstructions: "", treatmentStartDate: .now, treatmentEndDate: .now, treatmentDuration: .untilSpecificDate, numbersOfDays: 7, treatmentEndforNumberOfDays: Date(), notes: "")
     @State var openSheet: Bool = false
-    @State private var path = [NavigationForm]()
+  
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ReminderCalendarView(viewModel: ReminderCalendarVM(month: "Enero", numberMonth: 0, days: [1,2,3,4,5,6,7], numberWeekDay: 2))
-                .padding(.vertical)
+            
             FloatingActionButtonView(imageName: "plus", action: { openSheet.toggle()})
                 .padding()
         }
         .sheet(isPresented: $openSheet) {
-            NavigationStack(path: $path) {
-                VStack {
-                    Text("¿Que deseas hacer?")
-                        .padding(.bottom)
-                    
-                    ActionButtonView(action: {
-                        path.append(.formAddReminderMedicine)
-                    }, text: "Agregar recordatorio")
-                    .padding(.bottom)
-                    .buttonStyle(.bordered)
-                    
-                    ActionButtonView(action: {
-                        path.append(.formaAddMedicineChest)
-                    }, text: "Agregar al armario")
-                    
-                    .buttonStyle(.bordered)
-                }
-                .navigationDestination(for: NavigationForm.self) { form in
-                    switch form {
-                        case .formAddReminderMedicine:
-                            ReminderCalendarView(viewModel: ReminderCalendarVM(month: "Enero", numberMonth: 0, days: [1,2,3,4,5,6,7], numberWeekDay: 2))
-                        case .formaAddMedicineChest:
-                            Text("View B")
-                    }
-                }
-            }
-            .presentationDetents([.fraction(0.30), .medium])
+                SaveReminderFormView(model: $md)
         }
     }
 }
