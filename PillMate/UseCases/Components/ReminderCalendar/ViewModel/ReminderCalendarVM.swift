@@ -7,14 +7,15 @@
 
 import Foundation
 
+
 class ReminderCalendarVM: ObservableObject {
     
     //MARK: - Variables
     var calendar = Calendar.current
     let daysOfWeek = ["L", "M", "X", "J", "V", "S", "D"]
+    var currentDate: Date
     
     //MARK: - Published
-    @Published var currentDate: Date
     @Published var month: String
     @Published var numberMonth: Int
     @Published var days: [Int]
@@ -30,71 +31,65 @@ class ReminderCalendarVM: ObservableObject {
         self.selectedDay = selectedDay
     }
     
-    var monthoff: Date {
-        return monthOffset()
-    }
-    
     func loadViewCalendar() {
         monthYearString()
-        firstDayOffset()
         daysInMonth()
+        firstDayOffset()
         markToday()
     }
     
     func monthOffset() -> Date {
-        return calendar.date(byAdding: .month, value: numberMonth, to: startOfMonth()) ?? Date()
+        return calendar.date(byAdding: .month, value: numberMonth, to: currentDate) ?? Date()
     }
-    
-    func startOfMonth() -> Date {
-        let components = calendar.dateComponents([.year, .month, .day, .hour], from: currentDate)
-       return calendar.date(from: components) ?? Date()
-   }
     
     // Devuelve los dias del mes
     func daysInMonth() {
-        let range = calendar.range(of: .day, in: .month, for: monthoff)
+        let range = calendar.range(of: .day, in: .month, for: monthOffset())
         if let range = range {
             days = Array(range)
         }
     }
     
-   // Calcula en que cae el primer dia de la semana del mes
-    func firstDayOffset()  {
-        let firstDay = calendar.date(from: calendar.dateComponents([.year, .month], from: monthoff)) ?? Date()
-        let weekday = calendar.component(.weekday, from: firstDay) // 1 = Domingo, 7 = Sábado
-        numberWeekDay = (weekday + 5) % 7 // Calculo para que Lunes sea 0
+    // Calcula en que cae el primer dia de la semana del mes
+    func firstDayOffset() {
+        if let interval = calendar.dateInterval(of: .month, for: monthOffset()) {
+            let weekday = calendar.component(.weekday, from: interval.start)
+            numberWeekDay = (weekday + 5) % 7  // Calculo para que Lunes sea 0
+        }
     }
     
-  
-    func monthYearString()  {
+    func monthYearString() {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
-      
-        month = formatter.string(from:  monthoff).capitalized
+        
+        month = formatter.string(from: monthOffset()).capitalized
     }
     
     func markToday() {
-    
-        if let timeZone = TimeZone(identifier: "Europe/Madrid") {
-            calendar.timeZone = timeZone
-        }
+        let currentComponents = calendar.dateComponents(
+            [.day],
+            from: currentDate
+        )
         
-    
-        let actualComponents = calendar.dateComponents([.day, .month, .year], from: monthoff)
-        let currentComponents = calendar.dateComponents([.day, .month, .year], from: currentDate)
-        
-        if actualComponents == currentComponents {
-            for i in days {
-                if currentComponents.day == i  {
-                    selectedDay = i
-                }
+        if currentDate == monthOffset() {
+            if let today = days.first(where: { $0 == currentComponents.day }) {
+                selectedDay = today
             }
         } else {
-            selectedDay = nil
+            selectedDay = 0
         }
     }
 }
 
 extension ReminderCalendarVM {
-    static let preview = ReminderCalendarVM(currentDate: Date(), month: "March", numberMonth: 0, days: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], numberWeekDay: 5)
+    @MainActor static let preview = ReminderCalendarVM(
+        currentDate: Date(),
+        month: "March",
+        numberMonth: 0,
+        days: [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+        ],
+        numberWeekDay: 1
+    )
 }
