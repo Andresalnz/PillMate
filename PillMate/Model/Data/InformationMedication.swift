@@ -31,9 +31,9 @@ final class InformationMedication: Identifiable, Hashable, @unchecked Sendable {
     var notes: String
     
     @Relationship(deleteRule: .cascade, inverse: \ScheduledDose.medication)
-    var scheduledDoses: [ScheduledDose]
+    var scheduledDoses: [ScheduledDose]?
     
-    init(id: UUID, medicationName: String, medicationPresentation: String, medicationDose: String, medicationFrequency: String, medicationtTimePerDay: Int, medicationEveryXDays: Int, medicationDays: [String], medicationFirstDoseTime: Date, medicationLastDoseTime: Date, medicationMomentDose: String, medicationCustomInstructions: String, medicationTreatmentStartDate: Date, medicationTreatmentEndDate: Date, treatmentDuration: String, numbersOfDays: Int, treatmentEndforNumberOfDays: Date, notes: String, scheduledDoses: [ScheduledDose]) {
+    init(id: UUID, medicationName: String, medicationPresentation: String, medicationDose: String, medicationFrequency: String, medicationtTimePerDay: Int, medicationEveryXDays: Int, medicationDays: [String], medicationFirstDoseTime: Date, medicationLastDoseTime: Date, medicationMomentDose: String, medicationCustomInstructions: String, medicationTreatmentStartDate: Date, medicationTreatmentEndDate: Date, treatmentDuration: String, numbersOfDays: Int, treatmentEndforNumberOfDays: Date, notes: String, scheduledDoses: [ScheduledDose]? = nil) {
         self.id = id
         self.medicationName = medicationName
         self.medicationPresentation = medicationPresentation
