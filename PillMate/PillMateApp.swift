@@ -6,13 +6,30 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct PillMateApp: App {
+    
+    let container: ModelContainer = {
+        let schema = Schema([InformationMedication.self, ScheduledDose.self, ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        do {
+            
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            
+        } catch let err {
+            print("Error container | \(err.localizedDescription)")
+            fatalError()
+        }
+    }()
+    
     var body: some Scene {
+        let md: MedicationModel = MedicationModel(id: UUID() , name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 1, days: [], firstDoseTime: .now, momentDose: .afterMeal, customInstructions: "", treatmentStartDate: .now, treatmentEndDate: .now, treatmentDuration: .untilSpecificDate, numbersOfDays: 7, treatmentEndforNumberOfDays: Date(), notes: "")
+       
         WindowGroup {
-            ReminderCalendarView(viewModel: ReminderCalendarVM(currentDate: Date(), month: "", numberMonth: 0, days: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], numberWeekDay: 5))
-                .background(Color(red: 217/255, green: 220/255, blue: 214/255))
+           // ReminderCalendarView(viewModel: ReminderCalendarVM(month: "", numberMonth: 1, days: [1], numberWeekDay: 0) ).modelContainer(container)
+            HomeView(md: md, openSheet: false, vm: HomeVM(database: MedicationDatabase(context: container.mainContext))).modelContainer(container)
         }
     }
 }
