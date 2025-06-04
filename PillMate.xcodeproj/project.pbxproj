@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		9FBFD6E72D9D468D00629EAA /* PillMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PillMate.app; path = "/Users/andresaleu/WorkSpace/iOS/SwiftUI/PillMate/build/Debug-iphoneos/PillMate.app"; sourceTree = "<absolute>"; };
+		9F0B3F202DEDF91B0072367B /* PillMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PillMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +33,7 @@
 			isa = PBXGroup;
 			children = (
 				9F26180C2D527CD9004B2ABA /* PillMate */,
+				9F0B3F202DEDF91B0072367B /* PillMate.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,7 +59,7 @@
 			packageProductDependencies = (
 			);
 			productName = PillMate;
-			productReference = 9FBFD6E72D9D468D00629EAA /* PillMate.app */;
+			productReference = 9F0B3F202DEDF91B0072367B /* PillMate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
