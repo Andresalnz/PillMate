@@ -12,6 +12,8 @@ struct SaveReminderFormView: View {
     @Binding var model: MedicationModel
     @Environment(\.dismiss) var dismiss
     
+    var onSave: () -> Void
+    
     var body: some View {
         NavigationView {
             Form {
@@ -120,6 +122,8 @@ struct SaveReminderFormView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         print("Save")
+                        onSave()
+                        
                         dismiss()
                     }
                     .bold()
@@ -137,5 +141,5 @@ struct SaveReminderFormView: View {
 
 #Preview {
     @Previewable @State var md: MedicationModel = MedicationModel(id: UUID() , name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 1, days: [], firstDoseTime: .now, momentDose: .afterMeal, customInstructions: "", treatmentStartDate: .now, treatmentEndDate: .now, treatmentDuration: .untilSpecificDate, numbersOfDays: 7, treatmentEndforNumberOfDays: Date(), notes: "")
-    SaveReminderFormView(model: $md)
+    SaveReminderFormView(model: $md, onSave: {print("GUARDADO")})
 }
