@@ -20,15 +20,15 @@ class ReminderCalendarVM: ObservableObject {
     @Published var numberMonth: Int
     @Published var days: [Int]
     @Published var numberWeekDay: Int
-    @Published var selectedDay: Int?
+    @Published var isToday: Int?
     
-    init(currentDate: Date = Date(), month: String, numberMonth: Int, days: [Int], numberWeekDay: Int, selectedDay: Int? = nil) {
+    init(currentDate: Date = Date(), month: String, numberMonth: Int, days: [Int], numberWeekDay: Int, isToday: Int? = nil) {
         self.currentDate = currentDate
         self.month = month
         self.numberMonth = numberMonth
         self.days = days
         self.numberWeekDay = numberWeekDay
-        self.selectedDay = selectedDay
+        self.isToday = isToday
     }
     
     func loadViewCalendar() {
@@ -73,10 +73,10 @@ class ReminderCalendarVM: ObservableObject {
         
         if currentDate == monthOffset() {
             if let today = days.first(where: { $0 == currentComponents.day }) {
-                selectedDay = today
+               isToday = today
             }
         } else {
-            selectedDay = 0
+            isToday = 0
         }
     }
 }
