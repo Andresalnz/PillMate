@@ -16,6 +16,8 @@ struct MonthCalendarView: View {
     
     let calendarGrid: [GridItem] = Array(repeating: GridItem(.flexible()), count: 7)
     
+    @ObservedObject var viewModel: ReminderCalendarVM
+    
     var body: some View {
         VStack {
             Text(nameMonth)
@@ -33,7 +35,7 @@ struct MonthCalendarView: View {
                         .id("empty \(emptyDay)")
                 }
                 ForEach(daysInMonth, id: \.self) { day in
-                    DayCalendarView(day: day)
+                    DayCalendarView(day: day, selectToday: viewModel.isToday!)
                         .id("day \(day)")
                        
                 }
@@ -43,5 +45,5 @@ struct MonthCalendarView: View {
 }
 
 #Preview {
-    MonthCalendarView(nameMonth: "March", daysOfWeeks: ["L", "M", "X", "J", "V", "S", "D"], emptyDaysBeginMonth: 5, daysInMonth: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]).environmentObject(ReminderCalendarVM(currentDate: Date(), month: "", numberMonth: 0, days: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], numberWeekDay: 5))
+    MonthCalendarView(nameMonth: "March", daysOfWeeks: ["L", "M", "X", "J", "V", "S", "D"], emptyDaysBeginMonth: 5, daysInMonth: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], viewModel: ReminderCalendarVM(month: "", numberMonth: 1, days: [], numberWeekDay: 1))
 }
