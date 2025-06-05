@@ -11,6 +11,9 @@ struct DayCalendarView: View {
     
     let day: Int
     var selectToday: Int
+    let isSelected: Bool
+    let onTap: () -> Void
+   
     
     var body: some View {
         ZStack {
@@ -20,10 +23,15 @@ struct DayCalendarView: View {
                     .frame(height: 35)                
             }
             Text("\(day)")
+                .foregroundStyle(isSelected ? .red : .brown)
+                .onTapGesture {
+                    print("Selected day: \(day)")
+                    onTap()
+                }
         }
     }
 }
 
 #Preview {
-    DayCalendarView(day: 3, selectToday: 5)
+    DayCalendarView(day: 3, selectToday: 5, isSelected: false, onTap: { print("TAP") })
 }

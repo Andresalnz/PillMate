@@ -35,7 +35,9 @@ struct MonthCalendarView: View {
                         .id("empty \(emptyDay)")
                 }
                 ForEach(daysInMonth, id: \.self) { day in
-                    DayCalendarView(day: day, selectToday: viewModel.isToday!)
+                    DayCalendarView(day: day, selectToday: viewModel.isToday ?? 0, isSelected: viewModel.isSelectedDay(day), onTap: {
+                        viewModel.markDay(day)
+                    })
                         .id("day \(day)")
                        
                 }

@@ -22,13 +22,16 @@ class ReminderCalendarVM: ObservableObject {
     @Published var numberWeekDay: Int
     @Published var isToday: Int?
     
-    init(currentDate: Date = Date(), month: String, numberMonth: Int, days: [Int], numberWeekDay: Int, isToday: Int? = nil) {
+    @Published var selectedDay: Date?
+    
+    init(currentDate: Date = Date(), month: String, numberMonth: Int, days: [Int], numberWeekDay: Int, isToday: Int? = nil, selectedDay: Date? = nil) {
         self.currentDate = currentDate
         self.month = month
         self.numberMonth = numberMonth
         self.days = days
         self.numberWeekDay = numberWeekDay
         self.isToday = isToday
+        self.selectedDay = selectedDay
     }
     
     func loadViewCalendar() {
@@ -79,6 +82,25 @@ class ReminderCalendarVM: ObservableObject {
             isToday = 0
         }
     }
+    
+    func isSelectedDay(_ day: Int) -> Bool {
+           guard let selected = selectedDay else { return false }
+           var components = DateComponents()
+           components.day = day
+           
+           guard let date = calendar.date(from: components) else { return false }
+           
+           return calendar.isDate(selected, inSameDayAs: date)
+           
+       }
+       
+       func markDay(_ day: Int) {
+           var components = DateComponents()
+           components.day = day
+           
+           guard let date = calendar.date(from: components) else { return }
+           selectedDay = date
+       }
 }
 
 extension ReminderCalendarVM {
