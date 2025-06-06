@@ -23,7 +23,7 @@ struct DayCalendarView: View {
                     .frame(height: 35)                
             }
             Text("\(day)")
-                .foregroundStyle(isSelected ? .red : .brown)
+                .foregroundStyle(isSelected ? .red : .black)
                 .onTapGesture {
                     print("Selected day: \(day)")
                     onTap()
