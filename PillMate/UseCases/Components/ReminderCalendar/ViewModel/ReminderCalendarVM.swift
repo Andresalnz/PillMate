@@ -82,25 +82,23 @@ class ReminderCalendarVM: ObservableObject {
             isToday = 0
         }
     }
-    
+    //MARK: - Funciones para que se señale en rojo cuando se toca en un día
     func isSelectedDay(_ day: Int) -> Bool {
-           guard let selected = selectedDay else { return false }
-           var components = DateComponents()
-           components.day = day
-           
-           guard let date = calendar.date(from: components) else { return false }
-           
-           return calendar.isDate(selected, inSameDayAs: date)
-           
-       }
-       
-       func markDay(_ day: Int) {
-           var components = DateComponents()
-           components.day = day
-           
-           guard let date = calendar.date(from: components) else { return }
-           selectedDay = date
-       }
+        guard let selected = selectedDay else { return false }
+        var components = DateComponents()
+        components.day = day
+        
+        guard let date = calendar.date(from: components) else { return false }
+        return calendar.isDate(selected, inSameDayAs: date)
+    }
+    
+    func markDay(_ day: Int) {
+        var components = DateComponents()
+        components.day = day
+        
+        guard let date = calendar.date(from: components) else { return }
+        selectedDay = date
+    }
 }
 
 extension ReminderCalendarVM {
