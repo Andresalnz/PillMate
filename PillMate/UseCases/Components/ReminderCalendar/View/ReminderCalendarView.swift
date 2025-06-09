@@ -10,7 +10,11 @@ import SwiftUI
 struct ReminderCalendarView: View {
     
     
-    @StateObject  var viewModel: ReminderCalendarVM
+    @StateObject var viewModel: ReminderCalendarVM
+    
+    init() {
+        self._viewModel = StateObject(wrappedValue: ReminderCalendarVM(month: "", numberMonth: 1, days: [], numberWeekDay: 2))
+    }
     
     var body: some View {
         TabView(selection: $viewModel.numberMonth) {
@@ -32,5 +36,5 @@ struct ReminderCalendarView: View {
 }
 
 #Preview {
-    ReminderCalendarView(viewModel: .preview)
+    ReminderCalendarView()
 }

@@ -6,13 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SaveReminderFormView: View {
     
-    @Binding var model: MedicationModel
+    @Binding var model: MedicationModel 
     @Environment(\.dismiss) var dismiss
     
-    var onSave: () -> Void
+    @StateObject var viewModel: FormMedicationVM
+    
+    init(model: Binding<MedicationModel>, context: ModelContext) {
+        self._model = model
+        let service = MedicationDatabase(context: context)
+        self._viewModel = StateObject(wrappedValue: FormMedicationVM(database: service))
+    }
     
     var body: some View {
         NavigationView {
@@ -122,8 +129,9 @@ struct SaveReminderFormView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         print("Save")
-                        onSave()
-                        
+                        Task {
+                            await viewModel.save(medication: model)
+                        }
                         dismiss()
                     }
                     .bold()
@@ -140,6 +148,7 @@ struct SaveReminderFormView: View {
 }
 
 #Preview {
+    @Previewable @Environment(\.modelContext)  var context
     @Previewable @State var md: MedicationModel = MedicationModel(id: UUID() , name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 1, days: [], firstDoseTime: .now, momentDose: .afterMeal, customInstructions: "", treatmentStartDate: .now, treatmentEndDate: .now, treatmentDuration: .untilSpecificDate, numbersOfDays: 7, treatmentEndforNumberOfDays: Date(), notes: "")
-    SaveReminderFormView(model: $md, onSave: {print("GUARDADO")})
+    SaveReminderFormView(model: $md, context: context)
 }
