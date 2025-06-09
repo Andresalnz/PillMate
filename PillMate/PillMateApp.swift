@@ -29,7 +29,7 @@ struct PillMateApp: App {
        
         WindowGroup {
            // ReminderCalendarView(viewModel: ReminderCalendarVM(month: "", numberMonth: 1, days: [1], numberWeekDay: 0) ).modelContainer(container)
-            HomeView(md: md, openSheet: false, vm: HomeVM(database: MedicationDatabase(context: container.mainContext))).modelContainer(container)
+            HomeView(md: md, openSheet: false).modelContainer(container)
         }
     }
 }
