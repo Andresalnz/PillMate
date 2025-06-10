@@ -10,33 +10,72 @@ import SwiftData
 
 struct ReminderCellView: View {
     
-    @Query(sort:[SortDescriptor(\ScheduledDose.scheduledTime)]) var dose: [ScheduledDose]
+    @Query private var dose: [ScheduledDose]
+    let day: Date
     
-    var sch: [ScheduledDose] = [ScheduledDose(id: UUID(), scheduledTime: .now, status: "active", nitificacionIdentifier: "identifier", medication: InformationMedication(id: UUID(), medicationName: "Amoxicilina", medicationPresentation: "pills", medicationDose: "", medicationFrequency: "Cada día", medicationtTimePerDay: 3, medicationEveryXDays: 2, medicationDays: [], medicationFirstDoseTime: .now, medicationLastDoseTime: .now, medicationMomentDose: "Después de comer", medicationCustomInstructions: "Nada", medicationTreatmentStartDate: .now, medicationTreatmentEndDate: .now, treatmentDuration: "Hasta una fecha específica", numbersOfDays: 7, treatmentEndforNumberOfDays: .now, notes: ""))]
+    init(day: Date) {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: day)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)
+        let predicate = #Predicate<ScheduledDose> { item in
+            item.scheduledTime >= startOfDay && item.scheduledTime < endOfDay!
+        }
+        _dose = Query(filter: predicate, sort: \ScheduledDose.scheduledTime)
+        self.day = day
+    }
     
     var body: some View {
-        ForEach(sch, id: \.id) { item in
-            VStack(alignment: .center) {
-                Text("Hora: \(item.scheduledTime.formatted())")
-                Text("Nombre")
-                Text(item.medication.medicationName)
+        if dose.count == 0 {
+            VStack {
+                Text("No hay recordatorios para el día de hoy.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
         }
+        List {
+            ForEach(dose, id: \.id) { item in
+                Section("\(item.scheduledTime, style: .time)") {
+                    VStack(alignment: .leading, spacing: 30) {
+                        VStack(alignment: .leading, spacing:10 ) {
+                            Text(item.medication.medicationName)
+                                .font(.title)
+                            HStack {
+                                Text(item.medication.medicationDose)
+                                Text(item.medication.medicationPresentation)
+                            }
+                        }
+                        
+                        VStack (alignment: .leading, spacing: 10) {
+                            Text("Momento de toma: \(item.medication.medicationMomentDose)")
+                                .bold()
+                            if item.medication.medicationCustomInstructions != "" {
+                                Text("Instrucciones de toma: \(item.medication.medicationCustomInstructions)")
+                            }
+                            
+                        }
+                    }
+                    .listRowSeparator(.hidden)
+                    
+                    .padding(.horizontal, 20)
+                    .padding(.vertical)
+                    .background(
+                        Color(red: 0.56, green: 0.79, blue: 0.98)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 5)
+                    )
+                }
+                
+            }
+        }
+        .listStyle(.plain)
+        
         
     }
+    
 }
 
 #Preview {
-    List {
-        ReminderCellView()
-            .padding(.horizontal, 20)
-            .padding(.vertical)
-            .background(
-                Color(red: 0.56, green: 0.79, blue: 0.98)
-                    .cornerRadius(10)
-                    .padding(.horizontal, 5)
-            )
-    }
-    .listStyle(.plain)
+    ReminderCellView(day: .now)
+    
     
 }
