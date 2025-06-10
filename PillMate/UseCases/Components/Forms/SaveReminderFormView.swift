@@ -52,10 +52,10 @@ struct SaveReminderFormView: View {
                     
                     switch model.frequency {
                         case .daily, .alternateDays:
-                            Stepper("Tomas al día: \(model.timePerDay)", value: $model.timePerDay, in: 1...10)
+                            Stepper("Tomas al día: \(model.timePerDay)", value: $model.timePerDay, in: 1...3)
                             
                         case .specificWeekdays:
-                            Stepper("Tomas esos días: \(model.timePerDay)", value: $model.timePerDay, in: 1...10)
+                            Stepper("Tomas esos días: \(model.timePerDay)", value: $model.timePerDay, in: 1...3)
                             Text("Seleccionar días:").font(.caption).foregroundColor(.gray)
                             ForEach(WeekdayDays.allCases) { day in
                                 Toggle(day.rawValue, isOn: Binding(get: {
@@ -77,7 +77,7 @@ struct SaveReminderFormView: View {
                             
                         case .everyXDays:
                             Stepper("Cada \(model.everyXDays) días", value: $model.everyXDays, in: 1...30)
-                            Stepper("Tomas al día: \(model.timePerDay)", value: $model.timePerDay, in: 1...10)
+                            Stepper("Tomas al día: \(model.timePerDay)", value: $model.timePerDay, in: 1...3)
                     }
                     
                     DatePicker("Hora de la primera dosis", selection: $model.firstDoseTime, displayedComponents: .hourAndMinute)
@@ -116,11 +116,6 @@ struct SaveReminderFormView: View {
                     } else if model.treatmentDuration == .untilSpecificDate {
                         DatePicker("Fecha de finalización del tratamiento", selection: $model.treatmentEndDate, in: model.treatmentStartDate..., displayedComponents: .date)
                     }
-                }
-                
-                Section("Notas Adicionales") {
-                    TextField("Notas (ej: efectos secundarios, médico que lo recetó)", text: $model.notes, axis: .vertical)
-                        .lineLimit(3...)
                 }
             }
             .navigationTitle("Nuevo medicamento")
