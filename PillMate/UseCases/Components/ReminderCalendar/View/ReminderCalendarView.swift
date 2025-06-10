@@ -13,7 +13,7 @@ struct ReminderCalendarView: View {
     @StateObject var viewModel: ReminderCalendarVM
     
     init() {
-        self._viewModel = StateObject(wrappedValue: ReminderCalendarVM(month: "", numberMonth: 1, days: [], numberWeekDay: 2))
+        self._viewModel = StateObject(wrappedValue: ReminderCalendarVM(month: "", numberMonth: 0, days: [], numberWeekDay: 2))
     }
     
     var body: some View {
