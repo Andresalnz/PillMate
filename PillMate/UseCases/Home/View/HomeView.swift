@@ -31,7 +31,6 @@ struct HomeView: View {
 
 #Preview {
     @Previewable @State var md: MedicationModel = MedicationModel(id: UUID() , name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 1, days: [], firstDoseTime: .now, momentDose: .afterMeal, customInstructions: "", treatmentStartDate: .now, treatmentEndDate: .now, treatmentDuration: .untilSpecificDate, numbersOfDays: 7, treatmentEndforNumberOfDays: Date(), notes: "")
-    @Previewable @Environment(\.modelContext)  var context
     
     HomeView(md: md, openSheet: false)
 }
