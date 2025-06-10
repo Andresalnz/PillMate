@@ -56,7 +56,7 @@ struct ReminderCellView: View {
                     }
                     .listRowSeparator(.hidden)
                     
-                    .padding(.horizontal, 20)
+                    .frame(maxWidth: .infinity)
                     .padding(.vertical)
                     .background(
                         Color(red: 0.56, green: 0.79, blue: 0.98)
