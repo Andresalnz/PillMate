@@ -38,9 +38,12 @@ struct MonthCalendarView: View {
                     DayCalendarView(day: day, selectToday: viewModel.isToday ?? 0, isSelected: viewModel.isSelectedDay(day), onTap: {
                         viewModel.markDay(day)
                     })
-                        .id("day \(day)")
-                       
+                    .id("day \(day)")
+                    
                 }
+            }
+            if let selectedDay = viewModel.selectedDay {
+                ReminderCellView(day: selectedDay)
             }
         }
     }
