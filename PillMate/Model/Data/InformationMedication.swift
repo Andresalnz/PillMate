@@ -14,26 +14,26 @@ final class InformationMedication: Identifiable, Hashable, @unchecked Sendable {
     @Attribute(.unique) var id: UUID
     var medicationName: String
     var medicationPresentation: String
-    var medicationDose: String //Guarda, por ejemplo. (1 comprimido)
+    var medicationDose: String
     var medicationFrequency: String
     var medicationtTimePerDay: Int
-    var medicationEveryXDays: Int
-    var medicationDays: [String]
+    var medicationEveryXDays: Int?
+    var medicationDays: [WeekdayDays]?
     var medicationFirstDoseTime: Date
     var medicationLastDoseTime: Date
     var medicationMomentDose: String
     var medicationCustomInstructions: String
     var medicationTreatmentStartDate: Date
-    var medicationTreatmentEndDate: Date
+    var medicationTreatmentEndDate: Date?
     var treatmentDuration: String
-    var numbersOfDays: Int
-    var treatmentEndforNumberOfDays: Date
+    var numbersOfDays: Int?
+    var treatmentEndforNumberOfDays: Date?
     var notes: String
     
     @Relationship(deleteRule: .cascade, inverse: \ScheduledDose.medication)
     var scheduledDoses: [ScheduledDose]?
     
-    init(id: UUID, medicationName: String, medicationPresentation: String, medicationDose: String, medicationFrequency: String, medicationtTimePerDay: Int, medicationEveryXDays: Int, medicationDays: [String], medicationFirstDoseTime: Date, medicationLastDoseTime: Date, medicationMomentDose: String, medicationCustomInstructions: String, medicationTreatmentStartDate: Date, medicationTreatmentEndDate: Date, treatmentDuration: String, numbersOfDays: Int, treatmentEndforNumberOfDays: Date, notes: String, scheduledDoses: [ScheduledDose]? = nil) {
+    init(id: UUID = UUID(), medicationName: String, medicationPresentation: String, medicationDose: String, medicationFrequency: String, medicationtTimePerDay: Int, medicationEveryXDays: Int?, medicationDays: [WeekdayDays]?, medicationFirstDoseTime: Date, medicationLastDoseTime: Date, medicationMomentDose: String, medicationCustomInstructions: String, medicationTreatmentStartDate: Date, medicationTreatmentEndDate: Date?, treatmentDuration: String, numbersOfDays: Int, treatmentEndforNumberOfDays: Date?, notes: String, scheduledDoses: [ScheduledDose]? = nil) {
         self.id = id
         self.medicationName = medicationName
         self.medicationPresentation = medicationPresentation
