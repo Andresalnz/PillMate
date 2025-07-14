@@ -77,7 +77,6 @@ enum MomentDose: String, CaseIterable, Identifiable, Codable {
     case beforeMeal = "Antes de comer"
     case withMeal = "Con la comida"
     case afterMeal = "Despues de comer"
-    case irrespectiveOfMeal = "Independentemente de la comida"
     
     var id: String { self.rawValue }
 }
@@ -85,7 +84,6 @@ enum MomentDose: String, CaseIterable, Identifiable, Codable {
 enum TreatmentDuration: String, CaseIterable, Identifiable, Codable {
     case forNumberOfDays = "Por un número de días"
     case untilSpecificDate = "Hasta una fecha específica"
-    case indefinite = "Indefinido (hasta nueva orden)"
     
     var id: String { self.rawValue }
 }
