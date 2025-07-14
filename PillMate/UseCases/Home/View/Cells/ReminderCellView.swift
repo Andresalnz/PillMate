@@ -32,46 +32,26 @@ struct ReminderCellView: View {
                     .foregroundColor(.secondary)
             }
         }
+        
         List {
             ForEach(dose, id: \.id) { item in
                 Section("\(item.scheduledTime, style: .time)") {
-                    VStack(alignment: .leading, spacing: 30) {
-                        VStack(alignment: .leading, spacing:10 ) {
-                            Text(item.medication.medicationName)
-                                .font(.title)
-                            HStack {
-                                Text(item.medication.medicationDose)
-                                Text(item.medication.medicationPresentation)
-                            }
-                        }
-                        
-                        VStack (alignment: .leading, spacing: 10) {
-                            Text("Momento de toma: \(item.medication.medicationMomentDose)")
-                                .bold()
-                            if item.medication.medicationCustomInstructions != "" {
-                                Text("Instrucciones de toma: \(item.medication.medicationCustomInstructions)")
-                            }
-                            
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(item.medication.medicationName)
+                            .font(.title)
+                        Text("\(item.medication.medicationDose) \(item.medication.medicationPresentation) \(item.medication.medicationMomentDose)")
+                            .foregroundStyle(.gray)
+                        if item.medication.medicationCustomInstructions != "" {
+                            Text("Indicaciones:  \(item.medication.medicationCustomInstructions)")
+                                .foregroundStyle(.gray).opacity(0.9)
                         }
                     }
-                    .listRowSeparator(.hidden)
-                    
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical)
-                    .background(
-                        Color(red: 0.56, green: 0.79, blue: 0.98)
-                            .cornerRadius(10)
-                            .padding(.horizontal, 5)
-                    )
                 }
                 
             }
         }
         .listStyle(.plain)
-        
-        
     }
-    
 }
 
 #Preview {
