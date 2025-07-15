@@ -11,12 +11,14 @@ import Foundation
 final class FormMedicationVM: ObservableObject {
     
     private let database: DatabaseProtocol
+    private let notification: LocalNotificationProtocol
     var componentToAdd: Calendar.Component
     var valueToAdd: Int
     var md: InformationMedication?
     
-    init(database: DatabaseProtocol, componentToAdd: Calendar.Component = .day, valueToAdd: Int = 0, md: InformationMedication? = nil) {
+    init(database: DatabaseProtocol, notification: LocalNotificationProtocol, componentToAdd: Calendar.Component = .day, valueToAdd: Int = 0, md: InformationMedication? = nil) {
         self.database = database
+        self.notification = notification
         self.componentToAdd = componentToAdd
         self.valueToAdd = valueToAdd
         self.md = md
@@ -32,15 +34,14 @@ final class FormMedicationVM: ObservableObject {
             
             let dayTreamentStart = Calendar.current.dateComponents([.day, .month], from: medication.treatmentStartDate)
             let dayTreamentEnd = Calendar.current.dateComponents([.day], from: medication.treatmentEndDate)
-            let hour = Calendar.current.dateComponents([.hour], from: medication.firstDoseTime)
+            let hour = Calendar.current.dateComponents([.hour, .minute, .second], from: medication.firstDoseTime)
             
             let daysinTome: Int = (dayTreamentEnd.day! - dayTreamentStart.day!) * medication.timePerDay
             
-            let dateComponents = DateComponents(year: 2025, month: dayTreamentStart.month!, day: dayTreamentStart.day!, hour: hour.hour)
+            let dateComponents = DateComponents(year: 2025, month: dayTreamentStart.month!, day: dayTreamentStart.day!, hour: hour.hour, minute: hour.minute, second: hour.second)
             var date: Date = Calendar.current.date(from: dateComponents)!
             
-            
-            let sch = ScheduledDose(id: UUID(), scheduledTime: date, status: "active", nitificacionIdentifier: "", medication: md!)
+            let sch = ScheduledDose(id: UUID(), scheduledTime: date, status: "active", nitificacionIdentifier:  UUID().uuidString, medication: md!)
             dosesToSave.append(sch)
             switch medication.timePerDay {
                 case 1:
@@ -59,11 +60,12 @@ final class FormMedicationVM: ObservableObject {
             for _ in 0...daysinTome {
                 if let newTome = Calendar.current.date(byAdding: componentToAdd, value: valueToAdd, to: date) {
                     date = newTome
-                    let newsch = ScheduledDose(id: UUID(), scheduledTime: newTome, status: "active", nitificacionIdentifier: "", medication: md!)
+                    let newsch = ScheduledDose(id: UUID(), scheduledTime: newTome, status: "active", nitificacionIdentifier:  UUID().uuidString, medication: md!)
                     dosesToSave.append(newsch)
                 }
             }
             try await database.saveMediaction(md!, scheduleDose: dosesToSave)
+            await notification.scheduleNotification(modelSchedule: dosesToSave, medication: md!)
             dosesToSave = []
             
         } catch let err {

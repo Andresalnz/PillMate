@@ -18,7 +18,8 @@ struct SaveReminderFormView: View {
     init(model: Binding<MedicationModel>, context: ModelContext) {
         self._model = model
         let service = MedicationDatabase(context: context)
-        self._viewModel = StateObject(wrappedValue: FormMedicationVM(database: service))
+        let notification = LocalNotificationManager()
+        self._viewModel = StateObject(wrappedValue: FormMedicationVM(database: service, notification: notification))
     }
     
     var body: some View {
