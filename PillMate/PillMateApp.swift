@@ -11,10 +11,12 @@ import SwiftData
 @main
 struct PillMateApp: App {
     
+    @StateObject var lnManager: LocalNotificationManager = LocalNotificationManager()
+    
     let container: ModelContainer = {
-        let isRunningForPreviews = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+       // let isRunningForPreviews = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
         let schema = Schema([InformationMedication.self, ScheduledDose.self])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: isRunningForPreviews)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -30,7 +32,7 @@ struct PillMateApp: App {
        
         WindowGroup {
            // ReminderCalendarView(viewModel: ReminderCalendarVM(month: "", numberMonth: 1, days: [1], numberWeekDay: 0) ).modelContainer(container)
-            HomeView(md: md, openSheet: false).modelContainer(container)
+            HomeView(md: md, openSheet: false, lnManager: lnManager).modelContainer(container)
         }
     }
 }
