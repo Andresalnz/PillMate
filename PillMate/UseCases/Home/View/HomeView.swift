@@ -13,6 +13,8 @@ struct HomeView: View {
     @State var md: MedicationModel
     @State var openSheet: Bool
     @Environment(\.modelContext) var context
+    @Environment(\.scenePhase) var scenePhase
+    @ObservedObject var lnManager: LocalNotificationManager
     
     
     var body: some View {
@@ -26,11 +28,32 @@ struct HomeView: View {
         .sheet(isPresented: $openSheet) {
             SaveReminderFormView(model: $md, context: context)
         }
+       
+        .task {
+         try? await lnManager.requestAuthorization()
+        }
+        .alert("La aplicaciíon necesita permisos para enviar notificaciones para mejor funcionamiento", isPresented: $lnManager.isAuthorized) {
+            Button("Cancelar") { }
+            Button("Abrir ajustes") {
+                Task {
+                  await  lnManager.openSettings()
+                }
+            }
+            
+        }
+        .onChange(of: scenePhase) { _, newValue in
+            if newValue == .active {
+                Task {
+                    try? await lnManager.requestAuthorization()
+                   
+                }
+            }
+        }
     }
 }
 
 #Preview {
     @Previewable @State var md: MedicationModel = MedicationModel(id: UUID() , name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 1, days: [], firstDoseTime: .now, momentDose: .afterMeal, customInstructions: "", treatmentStartDate: .now, treatmentEndDate: .now, treatmentDuration: .untilSpecificDate, numbersOfDays: 7, treatmentEndforNumberOfDays: Date(), notes: "")
     
-    HomeView(md: md, openSheet: false)
+    HomeView(md: md, openSheet: false, lnManager: LocalNotificationManager())
 }
