@@ -13,7 +13,7 @@ enum MedicationPresentation: String, CaseIterable, Identifiable, Codable {
     case syrup = "Jarabe"
     case drops = "Gotas"
     case inhaler = "Inhalador"
-    case cream = "Crema/Pomada"
+   // case cream = "Crema/Pomada"
 
     var id: String { self.rawValue }
     
@@ -30,8 +30,8 @@ enum MedicationPresentation: String, CaseIterable, Identifiable, Codable {
                return "Ej: 3 gotas"
            case .inhaler:
                return "Ej: 2 pulsaciones"
-           case .cream:
-               return "Ej: Aplicación fina"
+//           case .cream:
+//               return "Ej: Aplicación fina"
            
            }
        }
@@ -44,7 +44,7 @@ enum MedicationPresentation: String, CaseIterable, Identifiable, Codable {
            case .syrup: return "ml"
            case .drops: return "gotas"
            case .inhaler: return "pulsaciones o mcg"
-           case .cream: return ""
+          // case .cream: return ""
           
            }
        }
