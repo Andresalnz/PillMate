@@ -56,6 +56,7 @@ class LocalNotificationManager: ObservableObject, LocalNotificationProtocol {
         content.title = medication.medicationName
         content.subtitle = "\(medication.medicationDose) \(medication.medicationPresentation) \(medication.medicationMomentDose)"
         content.body = "Indicaciones:  \(medication.medicationCustomInstructions)"
+        content.sound = .default
         for i in modelSchedule {
             let dateComponents2 = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: i.scheduledTime)
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents2, repeats: false)
