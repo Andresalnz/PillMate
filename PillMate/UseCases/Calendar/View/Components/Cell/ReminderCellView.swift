@@ -13,6 +13,8 @@ struct ReminderCellView: View {
     @Query private var dose: [ScheduledDose]
     let day: Date
     
+    @State private var showEditView: Bool = false
+    
     init(day: Date) {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: day)
@@ -46,8 +48,20 @@ struct ReminderCellView: View {
                                 .foregroundStyle(.gray).opacity(0.9)
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical)
+                    .padding(.horizontal)
+                    .background(
+                    
+                        
+                        
+                        showEditView ? Color.green : Color.white
+                        
+                    )
                 }
-                
+                .onTapGesture {
+                  showEditView = true
+                }
             }
         }
         .listStyle(.plain)

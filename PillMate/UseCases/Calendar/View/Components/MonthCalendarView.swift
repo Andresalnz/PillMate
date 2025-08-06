@@ -21,7 +21,7 @@ struct MonthCalendarView: View {
     var body: some View {
         VStack {
             Text(nameMonth)
-                .font(.headline)
+                .font(.headline).fontDesign(.rounded)
                 .padding()
             
             LazyVGrid(columns: calendarGrid, spacing: 30) {

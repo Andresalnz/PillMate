@@ -25,7 +25,6 @@ struct DayCalendarView: View {
             Text("\(day)")
                 .foregroundStyle(isSelected ? .red : .black)
                 .onTapGesture {
-                    print("Selected day: \(day)")
                     onTap()
                 }
         }
