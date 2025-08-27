@@ -9,16 +9,35 @@ import Foundation
 
 
 class HomeVM: ObservableObject {
+   
+    @Published var medicationModel: MedicationModel = MedicationModel(name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 2, days: [], firstDoseTime: Date(), momentDose: .afterMeal, customInstructions: "", treatmentStartDate: Date(), treatmentEndDate: Date(), treatmentDuration: .forNumberOfDays, treatmentEndforNumberOfDays: Date(), notes: "")
+    @Published var scheduledDose: [ScheduledDose] = []
+    @Published var scheduledDoseCount: [ScheduledDose] = []
+    private let database: DatabaseProtocol? = nil
+    var medication: InformationMedication? = nil
     
-//     @Published var calendarVM:  ReminderCalendarVM
-//    
-//    init(calendarVM: ReminderCalendarVM) {
-//        self.calendarVM = ReminderCalendarVM(month: "", numberMonth: 1, days: [], numberWeekDay: 1)
-//    }
-//    
-//    func hola() -> Date {
-//        print(calendarVM.selectedDay ?? .now)
-//        return calendarVM.selectedDay ?? .now
-//    }
- 
+    func filterNextDose(_ dosesToday: [ScheduledDose]) {
+        let pending = Set(dosesToday.filter({$0.scheduledTime >= Date() && $0.status != true })).sorted(by: {$0.scheduledTime < $1.scheduledTime})
+        //let nextTime = pending.first?.medication.medicationName
+        
+        scheduledDose = Array(pending)
+        
+    }
+    
+    func updateDoseCount(_ dosesToday: [ScheduledDose]) {
+        scheduledDoseCount = dosesToday.filter({$0.status == true })
+    }
+    
+    @MainActor
+    func indicationDoses(_ dosesToday: ScheduledDose)  {
+        do {
+            
+            try  database?.update(scheduleDose: dosesToday, medication: dosesToday.medication)
+            
+            
+        } catch let error {
+            print("Error saving medication: \(error)")
+        }
+        filterNextDose(scheduledDose)
+    }
 }
