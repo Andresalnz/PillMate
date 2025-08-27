@@ -36,5 +36,9 @@ struct ReminderCalendarView: View {
 }
 
 #Preview {
-    ReminderCalendarView()
+    let preview = Preview()
+    preview.addExamples(ScheduledDose.sampleItems)
+    
+    return ReminderCalendarView()
+        .modelContainer(preview.container)
 }

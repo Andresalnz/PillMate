@@ -146,5 +146,11 @@ struct SaveReminderFormView: View {
 #Preview {
     @Previewable @Environment(\.modelContext)  var context
     @Previewable @State var md: MedicationModel = MedicationModel(id: UUID() , name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 1, days: [], firstDoseTime: .now, momentDose: .afterMeal, customInstructions: "", treatmentStartDate: .now, treatmentEndDate: .now, treatmentDuration: .untilSpecificDate, numbersOfDays: 7, treatmentEndforNumberOfDays: Date(), notes: "")
-    SaveReminderFormView(model: $md, context: context)
+    
+    let preview = Preview()
+    
+    
+    preview.addExamples(ScheduledDose.sampleItems)
+   return SaveReminderFormView(model: $md, context: context)
+        .modelContainer(preview.container)
 }

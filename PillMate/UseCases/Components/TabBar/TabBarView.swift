@@ -52,6 +52,13 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView()
-        
+    
+    let preview = Preview()
+    preview.addExamples(ScheduledDose.sampleItems)
+    
+    
+    return TabBarView()
+        .modelContainer(preview.container)
+    
 }
+

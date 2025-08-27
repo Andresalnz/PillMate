@@ -69,7 +69,13 @@ struct ReminderCellView: View {
 }
 
 #Preview {
-    ReminderCellView(day: .now)
+    let preview = Preview()
+    preview.addExamples(ScheduledDose.sampleItems)
+    
+    return ReminderCellView(day: .now)
+        .modelContainer(preview.container)
     
     
 }
+
+
