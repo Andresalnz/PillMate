@@ -24,24 +24,31 @@ final class FormMedicationVM: ObservableObject {
         self.md = md
     }
     
+    func daysBetween(startDate: Date, endDate: Date) -> Int {
+        let calendar = Calendar.current
+        
+        let startOfDay = calendar.startOfDay(for: startDate)
+        let endOfDay = calendar.startOfDay(for: endDate)
+        let components = calendar.dateComponents([.day, .month], from: startOfDay, to: endOfDay)
+
+        return components.day!
+    }
     
     @MainActor
     func save(medication: MedicationModel) async {
         do {
-            md = InformationMedication(medicationName: medication.name, medicationPresentation: medication.presentation.rawValue, medicationDose: medication.dose, medicationFrequency: medication.frequency.rawValue, medicationtTimePerDay: medication.timePerDay, medicationEveryXDays: medication.everyXDays, medicationDays: [], medicationFirstDoseTime: medication.firstDoseTime, medicationLastDoseTime: .now, medicationMomentDose: medication.momentDose.rawValue.lowercased(), medicationCustomInstructions: medication.customInstructions, medicationTreatmentStartDate: medication.treatmentStartDate, medicationTreatmentEndDate: medication.treatmentEndDate, treatmentDuration: medication.treatmentDuration.rawValue, numbersOfDays: medication.numbersOfDays, treatmentEndforNumberOfDays: medication.treatmentEndforNumberOfDays, notes: medication.notes)
+            md = InformationMedication(medicationName: medication.name, medicationPresentation: medication.presentation.rawValue, medicationDose: medication.dose, medicationFrequency: medication.frequency.rawValue, medicationtTimePerDay: medication.timePerDay, medicationEveryXDays: medication.everyXDays, medicationDays: [], medicationFirstDoseTime: medication.firstDoseTime, medicationMomentDose: medication.momentDose.rawValue.lowercased(), medicationCustomInstructions: medication.customInstructions, medicationTreatmentStartDate: medication.treatmentStartDate, medicationTreatmentEndDate: medication.treatmentEndDate, treatmentDuration: medication.treatmentDuration.rawValue, numbersOfDays: medication.numbersOfDays, treatmentEndforNumberOfDays: medication.treatmentEndforNumberOfDays, notes: medication.notes)
   
             var dosesToSave: [ScheduledDose] = []
             
             let dayTreamentStart = Calendar.current.dateComponents([.day, .month], from: medication.treatmentStartDate)
-            let dayTreamentEnd = Calendar.current.dateComponents([.day], from: medication.treatmentEndDate)
-            let hour = Calendar.current.dateComponents([.hour, .minute, .second], from: medication.firstDoseTime)
-            
-            let daysinTome: Int = (dayTreamentEnd.day! - dayTreamentStart.day!) * medication.timePerDay
-            
-            let dateComponents = DateComponents(year: 2025, month: dayTreamentStart.month!, day: dayTreamentStart.day!, hour: hour.hour, minute: hour.minute, second: hour.second)
+            let hourTreamentStart = Calendar.current.dateComponents([.hour, .minute, .second], from: medication.firstDoseTime)
+    
+            let dateComponents = DateComponents(year: 2025, month: dayTreamentStart.month!, day: dayTreamentStart.day!, hour: hourTreamentStart.hour, minute: hourTreamentStart.minute, second: hourTreamentStart.second)
             var date: Date = Calendar.current.date(from: dateComponents)!
             
-            let sch = ScheduledDose(id: UUID(), scheduledTime: date, status: "active", nitificacionIdentifier:  UUID().uuidString, medication: md!)
+            let sch = ScheduledDose(id: UUID(), scheduledTime: date, status: false, nitificacionIdentifier:  UUID().uuidString, medication: md!)
+            
             dosesToSave.append(sch)
             switch medication.timePerDay {
                 case 1:
@@ -56,11 +63,16 @@ final class FormMedicationVM: ObservableObject {
                 default:
                     break
             }
-            
+            let daysinTome: Int = daysBetween(startDate: medication.treatmentStartDate, endDate: medication.treatmentEndDate) * medication.timePerDay
+            if let newTome = Calendar.current.date(byAdding: componentToAdd, value: valueToAdd, to: date) {
+                date = newTome
+                let newsch = ScheduledDose(id: UUID(), scheduledTime: newTome, status: false, nitificacionIdentifier:  UUID().uuidString, medication: md!)
+                dosesToSave.append(newsch)
+            }
             for _ in 0...daysinTome {
                 if let newTome = Calendar.current.date(byAdding: componentToAdd, value: valueToAdd, to: date) {
                     date = newTome
-                    let newsch = ScheduledDose(id: UUID(), scheduledTime: newTome, status: "active", nitificacionIdentifier:  UUID().uuidString, medication: md!)
+                    let newsch = ScheduledDose(id: UUID(), scheduledTime: newTome, status: false, nitificacionIdentifier:  UUID().uuidString, medication: md!)
                     dosesToSave.append(newsch)
                 }
             }
