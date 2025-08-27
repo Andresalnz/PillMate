@@ -36,5 +36,16 @@ struct Strings {
     static let pleaseSelectDay: String = "Por favor, selecciona un día"
     static let finishTreatmentNumberOfDays: String = "Finalizará el: "
     static let noReminder: String = "Sin recordatorio para el día de hoy"
+    static let notMedication: String = "No hay medicinas que debas tomar hoy"
+    static let notNextDoses: String = "No hay siguientes dosis para hoy"
+    static let medicationToday: String = "Medicamentos que debes tomar hoy"
+    static let nextDoses: String = "Siguientes dosis para hoy"
+    static let indicatorDoses: String = "Indicador de tomas"
 }
 
+struct StringsAlert {
+    static let notPermissionNotification: String = "La aplicaciíon necesita permisos para enviar notificaciones para mejor funcionamiento"
+    static let buttonCancel: String = "Cancelar"
+    static let buttonAccept: String = "Aceptar"
+    static let openSettings: String = "Abrir ajustes"
+}
