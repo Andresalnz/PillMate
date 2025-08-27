@@ -10,14 +10,14 @@ import SwiftData
 
 @Model
 final class ScheduledDose: Identifiable, Hashable, @unchecked Sendable {
-    @Attribute(.unique) var id: UUID
+    @Attribute(.unique) var id: UUID = UUID()
     var scheduledTime: Date
-    var status: String
+    var status: Bool
     var nitificacionIdentifier: String
     var medication: InformationMedication
     
-    init(id: UUID, scheduledTime: Date, status: String, nitificacionIdentifier: String, medication: InformationMedication) {
-        self.id = id
+    init(id: UUID = UUID(), scheduledTime: Date, status: Bool, nitificacionIdentifier: String, medication: InformationMedication) {
+        self.id = UUID()
         self.scheduledTime = scheduledTime
         self.status = status
         self.nitificacionIdentifier = nitificacionIdentifier
