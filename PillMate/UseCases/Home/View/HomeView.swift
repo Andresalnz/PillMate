@@ -140,6 +140,7 @@ struct HomeView: View {
         }
         .sheet(isPresented: $openSheet, onDismiss: {
             vm.filterNextDose(doses)
+            vm.cleanStrings()
         }) {
             SaveReminderFormView(model: $vm.medicationModel, context: context)
         }

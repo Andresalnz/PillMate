@@ -36,4 +36,16 @@ class HomeVM: ObservableObject {
         }
         filterNextDose(scheduledDose)
     }
+    
+    func cleanStrings() {
+        medicationModel.name = ""
+        medicationModel.presentation = .pills
+        medicationModel.dose = ""
+        medicationModel.frequency = .daily
+        medicationModel.timePerDay = 1
+        medicationModel.everyXDays = 2
+        medicationModel.days = []
+        medicationModel.firstDoseTime = Date()
+        medicationModel.momentDose = .afterMeal
+    }
 }
