@@ -10,7 +10,7 @@ import Foundation
 
 class HomeVM: ObservableObject {
    
-    @Published var medicationModel: MedicationModel = MedicationModel(name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 2, days: [], firstDoseTime: Date(), momentDose: .afterMeal, customInstructions: "", treatmentStartDate: Date(), treatmentEndDate: Date(), treatmentDuration: .forNumberOfDays, treatmentEndforNumberOfDays: Date(), notes: "")
+    @Published var medicationModel: MedicationModel = MedicationModel(name: "", presentation: .pills, dose: "", frequency: .daily, timePerDay: 1, everyXDays: 2, days: [], firstDoseTime: Date(), momentDose: .afterMeal, customInstructions: "", treatmentStartDate: Date(), treatmentEndDate: Date(), treatmentDuration: .untilSpecificDate, treatmentEndforNumberOfDays: Date(), notes: "")
     @Published var scheduledDose: [ScheduledDose] = []
     @Published var scheduledDoseCount: [ScheduledDose] = []
     private let database: DatabaseProtocol? = nil
