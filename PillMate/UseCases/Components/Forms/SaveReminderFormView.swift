@@ -13,6 +13,8 @@ struct SaveReminderFormView: View {
     @Binding var model: MedicationModel 
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: FormMedicationVM
+    @Query private var doses: [ScheduledDose]
+    @State var showAlertError: Bool = false
     
     var disabledButtonSave: Bool {
         if model.name != "" && model.dose != ""  {
@@ -94,10 +96,17 @@ struct SaveReminderFormView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         print("Save")
-                        Task {
-                            await viewModel.save(medication: model)
+                        if doses.contains(where: { $0.medication.medicationName == model.name }) {
+                            showAlertError = true
+                        } else {
+                            Task {
+                                await viewModel.save(medication: model)
+                            }
+                            
+                            dismiss()
                         }
-                        dismiss()
+                        
+                        
                     }
                     .disabled(disabledButtonSave)
                     .bold()
@@ -108,6 +117,13 @@ struct SaveReminderFormView: View {
                    
                     }
                 }
+            }
+        }
+        .alert("Ese medicamento ya ha sido guardado", isPresented: $showAlertError) {
+            Button(StringsAlert.buttonAccept) {
+                model.name = ""
+                model.dose = ""
+                dismiss()
             }
         }
     }
