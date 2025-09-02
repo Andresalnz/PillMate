@@ -12,7 +12,7 @@ struct TodayAndNextDoseMedicationView: View {
     let nameMedication: String?
     let timeMedication: Date?
     let doseMedication: String?
-    let presentationMedication: String?
+    let unitMedication: String?
     var statusDose: Bool = false
     
     var body: some View {
@@ -29,7 +29,7 @@ struct TodayAndNextDoseMedicationView: View {
                     Text(name)
                         .strikethrough(statusDose, color: .green)
                         .foregroundStyle(statusDose ? .green : .black)
-                    Text("\(doseMedication ?? "NA") \(presentationMedication ?? "NA")")
+                    Text("\(doseMedication ?? "NA") \(unitMedication ?? "NA")")
                         .bold()
                     Text("\(time, style: .time)")
                    
@@ -44,5 +44,5 @@ struct TodayAndNextDoseMedicationView: View {
 }
 
 #Preview {
-    TodayAndNextDoseMedicationView(nameMedication: "Ibuprofeno", timeMedication: .now, doseMedication: "1", presentationMedication: "pastillas")
+    TodayAndNextDoseMedicationView(nameMedication: "Ibuprofeno", timeMedication: .now, doseMedication: "1", unitMedication: "pastillas")
 }

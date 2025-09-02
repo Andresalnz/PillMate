@@ -44,7 +44,7 @@ struct HomeView: View {
                         }
                     } else {
                     ForEach(doses, id: \.id) { dose in
-                        TodayAndNextDoseMedicationView(nameMedication: dose.medication.medicationName, timeMedication: dose.scheduledTime, doseMedication: dose.medication.medicationDose, presentationMedication: dose.medication.medicationPresentation, statusDose: dose.status)
+                        TodayAndNextDoseMedicationView(nameMedication: dose.medication.medicationName, timeMedication: dose.scheduledTime, doseMedication: dose.medication.medicationDose, unitMedication: dose.medication.medicationUnit, statusDose: dose.status)
                         
                             .listRowSeparator(.hidden)
                             .onTapGesture {
@@ -75,7 +75,7 @@ struct HomeView: View {
                     } else {
                         ForEach(vm.scheduledDose, id: \.id) { dosis in
                             
-                            TodayAndNextDoseMedicationView(nameMedication: dosis.medication.medicationName, timeMedication: dosis.scheduledTime, doseMedication: dosis.medication.medicationDose, presentationMedication: dosis.medication.medicationPresentation)
+                            TodayAndNextDoseMedicationView(nameMedication: dosis.medication.medicationName, timeMedication: dosis.scheduledTime, doseMedication: dosis.medication.medicationDose, unitMedication: dosis.medication.medicationUnit)
                         }
                         .listRowSeparator(.hidden)
 
