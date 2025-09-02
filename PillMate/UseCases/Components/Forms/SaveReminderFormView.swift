@@ -12,8 +12,14 @@ struct SaveReminderFormView: View {
     
     @Binding var model: MedicationModel 
     @Environment(\.dismiss) var dismiss
-    
     @StateObject var viewModel: FormMedicationVM
+    
+    var disabledButtonSave: Bool {
+        if model.name != "" && model.dose != ""  {
+            return false
+        }
+        return true
+    }
     
     init(model: Binding<MedicationModel>, context: ModelContext) {
         self._model = model
@@ -51,35 +57,8 @@ struct SaveReminderFormView: View {
                         }
                     }
                     
-                    switch model.frequency {
-                        case .daily, .alternateDays:
-                            Stepper("Tomas al día: \(model.timePerDay)", value: $model.timePerDay, in: 1...3)
-                            
-                        case .specificWeekdays:
-                            Stepper("Tomas esos días: \(model.timePerDay)", value: $model.timePerDay, in: 1...3)
-                            Text("Seleccionar días:").font(.caption).foregroundColor(.gray)
-                            ForEach(WeekdayDays.allCases) { day in
-                                Toggle(day.rawValue, isOn: Binding(get: {
-                                    model.days.contains(day)
-                                }, set: { isOn in
-                                    if isOn {
-                                        model.days.insert(day)
-                                    } else {
-                                        model.days.remove(day)
-                                    }
-                                }))
-                            }
-                            
-                            if model.days.isEmpty {
-                                Text("Por favor, selecciona al menos un día.")
-                                    .font(.caption)
-                                    .foregroundColor(.red)
-                            }
-                            
-                        case .everyXDays:
-                            Stepper("Cada \(model.everyXDays) días", value: $model.everyXDays, in: 1...30)
-                            Stepper("Tomas al día: \(model.timePerDay)", value: $model.timePerDay, in: 1...3)
-                    }
+                    Stepper("Tomas al día: \(model.timePerDay)", value: $model.timePerDay, in: 1...3)
+                    
                     
                     DatePicker("Hora de la primera dosis", selection: $model.firstDoseTime, displayedComponents: .hourAndMinute)
                 }
@@ -104,19 +83,8 @@ struct SaveReminderFormView: View {
                         }
                     }
                     
-                    if model.treatmentDuration == .forNumberOfDays {
-                        Stepper("Durante \(model.numbersOfDays) días", value: $model.numbersOfDays, in: 1...365)
-                            .onChange(of: model.numbersOfDays) { _, newValue in
-                                model.treatmentEndforNumberOfDays = Calendar.current.date(byAdding: .day, value: newValue, to: model.treatmentStartDate) ?? Date()
-                            }
-                        
-                        Text("Finalizará el: \(model.treatmentEndforNumberOfDays, style: .date)")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        
-                    } else if model.treatmentDuration == .untilSpecificDate {
-                        DatePicker("Fecha de finalización del tratamiento", selection: $model.treatmentEndDate, in: model.treatmentStartDate..., displayedComponents: .date)
-                    }
+                    DatePicker("Fecha de finalización del tratamiento", selection: $model.treatmentEndDate, in: model.treatmentStartDate..., displayedComponents: .date)
+                    
                 }
             }
             .navigationTitle("Nuevo medicamento")
@@ -130,6 +98,7 @@ struct SaveReminderFormView: View {
                         }
                         dismiss()
                     }
+                    .disabled(disabledButtonSave)
                     .bold()
                 }
                 ToolbarItem(placement: .topBarLeading) {
