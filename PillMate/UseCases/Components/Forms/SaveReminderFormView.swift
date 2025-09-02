@@ -42,6 +42,7 @@ struct SaveReminderFormView: View {
                     
                     HStack {
                         TextField(model.presentation.placeholder, text: $model.dose)
+                            .keyboardType(.numberPad)
                         if !model.presentation.unit.isEmpty {
                             Text(model.presentation.unit)
                                 .font(.callout)

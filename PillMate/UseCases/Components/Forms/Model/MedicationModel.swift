@@ -8,7 +8,7 @@
 import Foundation
 
 enum MedicationPresentation: String, CaseIterable, Identifiable, Codable {
-    case pills = "Pastillas"
+    case pills = "Comprimidos"
     case injection = "Inyección"
     case syrup = "Jarabe"
     case drops = "Gotas"
