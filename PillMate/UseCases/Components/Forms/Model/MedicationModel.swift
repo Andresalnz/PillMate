@@ -52,9 +52,9 @@ enum MedicationPresentation: String, CaseIterable, Identifiable, Codable {
 
 enum FrequencyType: String, CaseIterable, Identifiable, Codable {
     case daily = "Cada día"
-    case alternateDays = "Días alternos"
-    case specificWeekdays = "Días específicos de la semana"
-    case everyXDays = "Cada X días"
+//    case alternateDays = "Días alternos"
+//    case specificWeekdays = "Días específicos de la semana"
+//    case everyXDays = "Cada X días"
 
     var id: String { self.rawValue }
     
@@ -82,7 +82,7 @@ enum MomentDose: String, CaseIterable, Identifiable, Codable {
 }
 
 enum TreatmentDuration: String, CaseIterable, Identifiable, Codable {
-    case forNumberOfDays = "Por un número de días"
+    //case forNumberOfDays = "Por un número de días"
     case untilSpecificDate = "Hasta una fecha específica"
     
     var id: String { self.rawValue }

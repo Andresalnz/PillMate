@@ -15,6 +15,7 @@ final class InformationMedication: Identifiable, Hashable, @unchecked Sendable {
     var medicationName: String
     var medicationPresentation: String
     var medicationDose: String
+    var medicationUnit: String
     var medicationFrequency: String
     var medicationtTimePerDay: Int
     var medicationEveryXDays: Int?
@@ -33,11 +34,12 @@ final class InformationMedication: Identifiable, Hashable, @unchecked Sendable {
     @Relationship(deleteRule: .cascade, inverse: \ScheduledDose.medication)
     var scheduledDoses: [ScheduledDose]?
     
-    init(id: UUID = UUID(), medicationName: String, medicationPresentation: String, medicationDose: String, medicationFrequency: String, medicationtTimePerDay: Int, medicationEveryXDays: Int? = nil, medicationDays: [WeekdayDays]? = nil, medicationFirstDoseTime: Date,  medicationMomentDose: String, medicationCustomInstructions: String, medicationTreatmentStartDate: Date, medicationTreatmentEndDate: Date? = nil, treatmentDuration: String, numbersOfDays: Int? = nil, treatmentEndforNumberOfDays: Date? = nil, notes: String? = nil, scheduledDoses: [ScheduledDose]? = nil) {
+    init(id: UUID = UUID(), medicationName: String, medicationPresentation: String, medicationDose: String, medicationUnit: String, medicationFrequency: String, medicationtTimePerDay: Int, medicationEveryXDays: Int? = nil, medicationDays: [WeekdayDays]? = nil, medicationFirstDoseTime: Date,  medicationMomentDose: String, medicationCustomInstructions: String, medicationTreatmentStartDate: Date, medicationTreatmentEndDate: Date? = nil, treatmentDuration: String, numbersOfDays: Int? = nil, treatmentEndforNumberOfDays: Date? = nil, notes: String? = nil, scheduledDoses: [ScheduledDose]? = nil) {
         self.id = UUID()
         self.medicationName = medicationName
         self.medicationPresentation = medicationPresentation
         self.medicationDose = medicationDose
+        self.medicationUnit = medicationUnit
         self.medicationFrequency = medicationFrequency
         self.medicationtTimePerDay = medicationtTimePerDay
         self.medicationEveryXDays = medicationEveryXDays
