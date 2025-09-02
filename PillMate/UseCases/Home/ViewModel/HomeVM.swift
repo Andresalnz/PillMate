@@ -17,11 +17,7 @@ class HomeVM: ObservableObject {
     var medication: InformationMedication? = nil
     
     func filterNextDose(_ dosesToday: [ScheduledDose]) {
-        let pending = Set(dosesToday.filter({$0.scheduledTime >= Date() && $0.status != true })).sorted(by: {$0.scheduledTime < $1.scheduledTime})
-        //let nextTime = pending.first?.medication.medicationName
-        
-        scheduledDose = Array(pending)
-        
+        scheduledDose = dosesToday.filter({$0.scheduledTime >= Date() && $0.status != true }).sorted(by: {$0.scheduledTime < $1.scheduledTime})
     }
     
     func updateDoseCount(_ dosesToday: [ScheduledDose]) {
