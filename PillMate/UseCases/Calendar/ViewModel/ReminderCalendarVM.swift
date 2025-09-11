@@ -22,9 +22,9 @@ class ReminderCalendarVM: ObservableObject {
     @Published var numberWeekDay: Int
     @Published var isToday: Int?
     
-    @Published var selectedDay: Date?
+    @Published var selectedDay: Date
     
-    init(currentDate: Date = Date(), month: String, numberMonth: Int, days: [Int], numberWeekDay: Int, isToday: Int? = nil, selectedDay: Date? = nil) {
+    init(currentDate: Date = Date(), month: String, numberMonth: Int, days: [Int], numberWeekDay: Int, isToday: Int? = nil, selectedDay: Date = .now) {
         self.currentDate = currentDate
         self.month = month
         self.numberMonth = numberMonth
@@ -86,14 +86,13 @@ class ReminderCalendarVM: ObservableObject {
     //MARK: - Funciones para que se señale en rojo cuando se toca en un día
     func isSelectedDay(_ day: Int) -> Bool {
         let dateMonthOffSet = calendar.dateComponents([.year, .month], from: monthOffset())
-        guard let selected = selectedDay else { return false }
         var components = DateComponents()
         components.day = day
         components.month = dateMonthOffSet.month
         components.year = dateMonthOffSet.year
         
         guard let date = calendar.date(from: components) else { return false }
-        return calendar.isDate(selected, inSameDayAs: date)
+        return calendar.isDate(selectedDay, inSameDayAs: date)
     }
     
     func markDay(_ day: Int) {
@@ -112,7 +111,9 @@ class ReminderCalendarVM: ObservableObject {
         if calendar.isDate(currentDate, inSameDayAs: monthOffset()) {
             selectedDay = currentDate
         } else {
-            selectedDay = calendar.date(from: DateComponents(year: dateMonthOffSet.year, month: dateMonthOffSet.month, day: 1))
+            if let select = calendar.date(from: DateComponents(year: dateMonthOffSet.year, month: dateMonthOffSet.month, day: 1)) {
+                selectedDay = select
+            }
         }
         
     }
