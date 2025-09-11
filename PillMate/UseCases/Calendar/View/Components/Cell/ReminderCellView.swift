@@ -6,76 +6,40 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ReminderCellView: View {
     
-    @Query private var dose: [ScheduledDose]
-    let day: Date
-    
-    @State private var showEditView: Bool = false
-    
-    init(day: Date) {
-        let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: day)
-        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)
-        let predicate = #Predicate<ScheduledDose> { item in
-            item.scheduledTime >= startOfDay && item.scheduledTime < endOfDay!
-        }
-        _dose = Query(filter: predicate, sort: \ScheduledDose.scheduledTime)
-        self.day = day
-    }
+    let hourMedication: Date
+    let nameMedication: String
+    let doseMedication: String
+    let presentationMedication: String
+    let momentDoseMedication: String
+    let customInstructionsMedication: String
+    var statusDose: Bool
     
     var body: some View {
-        if dose.count == 0 {
-            VStack {
-                Text("No hay recordatorios para el día de hoy.")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+        VStack(alignment: .leading, spacing: 10) {
+            Text(nameMedication)
+                .font(.title)
+            Text("\(doseMedication) \(presentationMedication) \(momentDoseMedication)")
+                .foregroundStyle(.gray)
+            if customInstructionsMedication != "" {
+                Text("Indicaciones:  \(customInstructionsMedication)")
+                    .foregroundStyle(.gray).opacity(0.9)
             }
         }
-        
-        List {
-            ForEach(dose, id: \.id) { item in
-                Section("\(item.scheduledTime, style: .time)") {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text(item.medication.medicationName)
-                            .font(.title)
-                        Text("\(item.medication.medicationDose) \(item.medication.medicationPresentation) \(item.medication.medicationMomentDose)")
-                            .foregroundStyle(.gray)
-                        if item.medication.medicationCustomInstructions != "" {
-                            Text("Indicaciones:  \(item.medication.medicationCustomInstructions)")
-                                .foregroundStyle(.gray).opacity(0.9)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.vertical)
-                    .padding(.horizontal)
-                    .background(
-                    
-                        
-                        
-                        showEditView ? Color.green : Color.white
-                        
-                    )
-                }
-                .onTapGesture {
-                  showEditView = true
-                }
-            }
-        }
-        .listStyle(.plain)
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            Color(statusDose ? Color.green : Color.gray)
+                .opacity(0.12)
+                .cornerRadius(10)
+        )
     }
 }
 
 #Preview {
-    let preview = Preview()
-    preview.addExamples(ScheduledDose.sampleItems)
-    
-    return ReminderCellView(day: .now)
-        .modelContainer(preview.container)
-    
-    
+    ReminderCellView(hourMedication: .now, nameMedication: "Omeprazol", doseMedication: "1", presentationMedication: "Pastillas", momentDoseMedication: "despues de comer", customInstructionsMedication: "Después de comer y con agua", statusDose: false)
 }
 
 
