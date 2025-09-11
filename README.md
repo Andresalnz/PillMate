@@ -9,7 +9,8 @@ Este proyecto lo he creado con la finalidad de demostrar mis conocimientos en el
 ### Home
 
 - Sin medicamentos
-![Home - Indicador](Screenshots/HomeWithoutMedication.png)
+
+<img src="Screenshots/HomeWithoutMedication.png" alt="Sin medicamentos" width="300"/>
 
 - Lista de medicamentos y próiximas dósis 
 ![Home - Lista de medicamentos](Screenshots/ListMedicationToday.png)
