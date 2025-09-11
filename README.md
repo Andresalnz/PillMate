@@ -5,6 +5,24 @@ Permite registrar medicamentos, consultar las tomas del día, marcar las tomas c
 
 Este proyecto lo he creado con la finalidad de demostrar mis conocimientos en el desarrollo de aplicaciones iOS, aplicando buenas prácticas para un código limpio y escalable.
 
+
+## 🚀 Características técnicas
+
+- Interfaz construida 100% con **SwiftUI**
+- Notificaciones locales con **UserNotifications**
+- Almacenamiento local con **SwifData**
+- Siguiendo los principios **SOLID** para mantener un código limpio, mantenible y escalable
+- Arquitectura **MVVM**
+- Navegación fluida e intuitiva
+- Desarrollo para iOS 18+
+
+## 📱 Fucionalidades principales
+
+- **Home:** Muestra medicamentos del día, próximas dosís y un indicador de tomas.
+- **Calendar:** Navegeación entre meses para ver los medicamentos del día seleccionado.
+- **Formulario:** Registro de medicamentos.
+- **Notificaciones:** Recordatorios automáticos a la hora que este programada la medicación.
+
 ## 📸 Screenshots
 ### Home
 
@@ -15,13 +33,14 @@ Este proyecto lo he creado con la finalidad de demostrar mis conocimientos en el
 </div>
 
 - Lista de medicamentos y próximas dosis 
-
-<table>
-  <tr>
+<div align="center">
+    <table>
+    <tr>
     <td><img src="Screenshots/ListMedicationToday.png" alt="Lista de medicamentos" width="250"/></td>
     <td><img src="Screenshots/ListNextDose.png" alt="Lista proximas dosis" width="250"/></td>
-  </tr>
-</table>
+    </tr>
+    </table>
+</div>
 
 
 - Indicador de tomas y medicación marcada como tomada
@@ -43,23 +62,6 @@ Este proyecto lo he creado con la finalidad de demostrar mis conocimientos en el
 <div align="center">
   <img src="Screenshots/Form.png" alt="Formulario" width="300"/>
 </div>
-
-## 🚀 Características técnicas
-
-- Interfaz construida 100% con **SwiftUI**
-- Notificaciones locales con **UserNotifications**
-- Almacenamiento local con **SwifData**
-- Siguiendo los principios **SOLID** para mantener un código limpio, mantenible y escalable
-- Arquitectura **MVVM**
-- Navegación fluida e intuitiva
-- Desarrollo para iOS 18+
-
-## 📱 Fucionalidades principales
-
-- **Home:** Muestra medicamentos del día, próximas dosís y un indicador de tomas.
-- **Calendar:** Navegeación entre meses para ver los medicamentos del día seleccionado.
-- **Formulario:** Registro de medicamentos.
-- **Notificaciones:** Recordatorios automáticos a la hora que este programada la medicación.
 
 ## 🛠️ Stack 
 
