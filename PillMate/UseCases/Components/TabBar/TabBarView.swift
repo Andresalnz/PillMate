@@ -58,7 +58,7 @@ struct TabBarView: View {
     
     
     return TabBarView()
-        .modelContainer(preview.container)
+        .modelContainer(preview.containerPreview)
     
 }
 

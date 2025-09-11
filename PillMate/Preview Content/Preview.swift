@@ -10,14 +10,14 @@ import SwiftData
 
 struct Preview {
 
-        let container: ModelContainer
+        let containerPreview: ModelContainer
         
     init() {
         let schema = Schema([InformationMedication.self, ScheduledDose.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         
         do {
-            container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            containerPreview = try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError("No se pudo crear el contenedor de la vista previa: \(error)")
         }
@@ -28,7 +28,7 @@ struct Preview {
             
            
         for example in examples {
-                container.mainContext.insert(example)
+            containerPreview.mainContext.insert(example)
             }
             
             

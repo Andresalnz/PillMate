@@ -172,6 +172,6 @@ struct HomeView: View {
     preview.addExamples(ScheduledDose.sampleItems)
     
    return  HomeView(vm: HomeVM(), openSheet: false, lnManager: LocalNotificationManager())
-        .modelContainer(preview.container)
+        .modelContainer(preview.containerPreview)
       
 }

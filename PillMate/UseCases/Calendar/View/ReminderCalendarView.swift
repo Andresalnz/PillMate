@@ -40,5 +40,5 @@ struct ReminderCalendarView: View {
     preview.addExamples(ScheduledDose.sampleItems)
     
     return ReminderCalendarView()
-        .modelContainer(preview.container)
+        .modelContainer(preview.containerPreview)
 }

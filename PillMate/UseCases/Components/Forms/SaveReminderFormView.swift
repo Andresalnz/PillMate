@@ -138,5 +138,5 @@ struct SaveReminderFormView: View {
     
     preview.addExamples(ScheduledDose.sampleItems)
    return SaveReminderFormView(model: $md, context: context)
-        .modelContainer(preview.container)
+        .modelContainer(preview.containerPreview)
 }
