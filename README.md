@@ -10,21 +10,39 @@ Este proyecto lo he creado con la finalidad de demostrar mis conocimientos en el
 
 - Sin medicamentos
 
-<img src="Screenshots/HomeWithoutMedication.png" alt="Sin medicamentos" width="300"/>
+<div align="center">
+  <img src="Screenshots/HomeWithoutMedication.png" alt="Sin medicamentos" width="300"/>
+</div>
 
-- Lista de medicamentos y próiximas dósis 
-![Home - Lista de medicamentos](Screenshots/ListMedicationToday.png)
-![Home - Lista de próxiams dósis](Screenshots/ListNextDose.png)
+- Lista de medicamentos y próximas dosis 
+
+<table>
+  <tr>
+    <td><img src="Screenshots/ListMedicationToday.png" alt="Lista de medicamentos" width="250"/></td>
+    <td><img src="Screenshots/ListNextDose.png" alt="Lista proximas dosis" width="250"/></td>
+  </tr>
+</table>
+
 
 - Indicador de tomas y medicación marcada como tomada
-![Home - Indicador](Screenshots/IndicatorDoses.png)
+
+<div align="center">
+  <img src="Screenshots/IndicatorDoses.png" alt="Indicador tomas" width="300"/>
+</div>
 
 ### 📅 Calendario
+
 - Vista general del calendario
-![Calendario](Screenshots/Calendario.png)
+
+<div align="center">
+  <img src="Screenshots/Calendar.png" alt="Calendario" width="300"/>
+</div>
 
 ### ➕ Formulario
-![Formulario](Screenshots/Form.png)
+
+<div align="center">
+  <img src="Screenshots/Form.png" alt="Formulario" width="300"/>
+</div>
 
 ## 🚀 Características técnicas
 
